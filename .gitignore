@@ -1,6 +1,6 @@
 .venv
 log.txt
-config.env
+# config.env
 **/__pycache__/
 *.session
 *.session-journal
