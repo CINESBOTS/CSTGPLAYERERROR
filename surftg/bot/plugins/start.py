@@ -48,7 +48,7 @@ async def start(bot: Client, message: Message):
     
     if string:
         try:
-            argument = string.split("-")
+            argument = string.split("_")
             chat_id = argument[1]
             msg_id = argument[2]
             # data = await db.search_static_tgfiles(chat_id, msg_id)
@@ -79,9 +79,6 @@ async def start(bot: Client, message: Message):
             )
         except Exception as e:
             print(f"An error occurred: {e}")
-
-
-
 
 
 

@@ -355,7 +355,6 @@ async def wstream_handler_watch(request: web.Request):
         size = data[0].get('size')
         db_id = str(data[0].get('_id'))
         chat_id = f"-100{chat_id}"
-        enc_msg = await encode(f("get-{chat_id}-{msg_id}"))
         return web.Response(text=await render_page(msg_id, hash_value, chat_id=chat_id, route="static", file_name=name, file_size=size, db_id=db_id, enc_msg=enc_msg), content_type='text/html')
     except InvalidHash as e:
         raise web.HTTPForbidden(text=e.message) from e
@@ -400,8 +399,9 @@ async def wssxtream_handler_watch(request: web.Request):
         msg_id = data[0].get('msg_id')
         size = data[0].get('size')
         db_id = str(data[0].get('_id'))
+        enc_msg = await encode(f("get_{chat_id}_{msg_id}"))
         chat_id = f"-100{chat_id}"
-        return web.Response(text=await render_page(msg_id, hash_value, chat_id=chat_id, route="telegram", file_name=name, file_size=size, db_id=db_id), content_type='text/html')
+        return web.Response(text=await render_page(msg_id, hash_value, chat_id=chat_id, route="telegram", file_name=name, file_size=size, db_id=db_id, , enc_msg=enc_msg), content_type='text/html')
     except InvalidHash as e:
         raise web.HTTPForbidden(text=e.message) from e
     except (AttributeError, BadStatusLine, ConnectionResetError):
