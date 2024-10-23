@@ -9,7 +9,7 @@ from surftg.helper.media import is_media
 from surftg.helper.tmdb import TMDBClient
 from surftg.bot import StreamBot
 from pyrogram import filters, Client
-from pyrogram.types import Message
+from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 from pyrogram.errors import FloodWait
 from pyrogram.enums.parse_mode import ParseMode
 from asyncio import sleep
@@ -39,6 +39,7 @@ async def start(bot: Client, message: Message):
 async def start(bot: Client, message: Message):
     print(message.text)
     text = message.text
+    string = ''
     try:
         base64_string = text.split(" ", 1)[1]
         string = await decode(base64_string)
@@ -61,7 +62,21 @@ async def start(bot: Client, message: Message):
             print(f"An error occurred: {e}")
     else :
         try:
-            await message.reply(text="HEY Welcome!")
+            reply_markup = InlineKeyboardMarkup(
+                [
+                    [
+                        InlineKeyboardButton("🏆 Channel 🏆", url="https://t.me/CineSubzMovies"),
+                        InlineKeyboardButton("🗣 Group 🗣", url="https://t.me/CineSubzChatNew")
+                    ]
+                ]
+            )
+        
+            await message.reply_text(
+                text = (f"Hello {message.from_user.first_name}\n\nWelcome To CineSubz TG Bot"),
+                reply_markup = reply_markup,
+                disable_web_page_preview = True,
+                quote = True
+            )
         except Exception as e:
             print(f"An error occurred: {e}")
 

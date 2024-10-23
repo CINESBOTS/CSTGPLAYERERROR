@@ -104,7 +104,7 @@ def generate_search_pagination(request, current_page, total_pages, max_pages_to_
     return pagination_html
 
 
-async def render_page(id, secure_hash, is_admin=False, html='', playlist='', database='', route='', redirect_url='', msg='', chat_id='', file_name='', file_size='', db_id='', current_page=1, total_pages=1):
+async def render_page(id, secure_hash, is_admin=False, html='', playlist='', database='', route='', redirect_url='', msg='', chat_id='', file_name='', file_size='', db_id='', enc_msg='', current_page=1, total_pages=1):
     theme = await db.get_variable('theme')
     if theme is None or theme == '':
         theme = Telegram.THEME
@@ -162,7 +162,7 @@ async def render_page(id, secure_hash, is_admin=False, html='', playlist='', dat
         async with aiopen(ospath.join(tpath, 'statictelegramvideo.html')) as r:
             poster = f"/api/thumb/{chat_id}?id={id}"
             chat_id = chat_id.replace('-100', '')
-            html = (await r.read()).replace('<!-- Filename -->', file_name).replace("<!-- Theme -->", theme.lower()).replace('<!-- Poster -->', poster).replace('<!-- Size -->', file_size).replace('<!-- Username -->', StreamBot.me.username).replace('<!-- chatid -->', chat_id).replace('<!-- dbID -->', db_id)
+            html = (await r.read()).replace('<!-- Filename -->', file_name).replace("<!-- Theme -->", theme.lower()).replace('<!-- Poster -->', poster).replace('<!-- Size -->', file_size).replace('<!-- Username -->', StreamBot.me.username).replace('<!-- chatid -->', chat_id).replace('<!-- dbID -->', db_id).replace('<!-- enc_msg -->', enc_msg)
     
     else:
         file_data = await get_file_ids(StreamBot, chat_id=int(chat_id), message_id=int(id))
