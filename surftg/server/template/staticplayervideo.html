@@ -91,9 +91,9 @@
 
     <div class="video-player">
         <video controls crossorigin playsinline data-poster="<!-- Poster -->" id="player">
-            <source src="#" type="video/mp4" size="480" id="s480"/>
+           <!-- <source src="#" type="video/mp4" size="480" id="s480"/> -->
             <source src="#" type="video/mp4" size="720" id="s720"/>
-            <source src="#" type="video/mp4" size="1080" id="s1080"/>
+           <!--  <source src="#" type="video/mp4" size="1080" id="s1080"/> -->
         </video>
     </div>
     <!-- <div class="card bg-light mb-3" style="margin: auto; border-radius: 5px;">
@@ -116,7 +116,8 @@
 
     const player = new Plyr('#player', {
         controls: ['play', 'progress', 'current-time', 'mute', 'volume', 'fullscreen', 'pip', 'airplay', 'settings', "play-large", 'duration'],
-        settings : ['captions', 'quality', 'speed', 'loop'],
+        settings : ['captions', 'speed', 'loop'],
+       <!-- settings : ['captions','quality','speed', 'loop'],  -->
         hideControls: false,
         keyboard: { focused: true, global: true },
         loop: { active: false },
@@ -125,9 +126,9 @@
     function updateVideoSource() {
 
         document.getElementById('player').src = downloadlink.replace('--size--','720p');
-        document.getElementById('s480').src = downloadlink.replace('--size--','480p');
+     <!--   document.getElementById('s480').src = downloadlink.replace('--size--','480p'); -->
         document.getElementById('s720').src = downloadlink.replace('--size--','720p');
-        document.getElementById('s1080').src = downloadlink.replace('--size--','1080p');
+     <!--   document.getElementById('s1080').src = downloadlink.replace('--size--','1080p'); -->
 
     }
     window.onload = function () {
