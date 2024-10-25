@@ -1,0 +1,107 @@
+Docker steps for your personal modified repo 🔥
+
+1) git clone https://weebzone:{githubtoken}@github.com/weebzone/GayanSurf
+
+😯Note: replace 
+{githubtoken}
+ with your own classic github token
+
+2) cd GayanSurf
+
+3) cp config_sample.env config.env
+
+4) nano config.env
+
+only fill these value rest of value don't touch
+
+# Startup Config
+API_ID = ""
+API_HASH = ""
+BOT_TOKEN = ""
+STATIC_AUTH_CHANNEL = ""    # seperate channel by ,
+DATABASE_URL = ""
+
+
+# Additional CDN Bots
+# MULTI_TOKEN1 = ""
+# MULTI_TOKEN2 = "" (upto 50)
+
+# Web Config
+BASE_URL = ""
+PORT = "8080"
+﻿➡️ save the config
+
+5) sudo docker build -t surftg .
+
+6) sudo docker run -p 8080:8080 surftg
+
+done
+
+open the site
+http://BASE_URL:8080
+
+
+New Restart Start Comnd 
+  sudo docker run --restart always -p 8080:8080 surftg
+
+
+
+heroku setup
+
+1) download heroku cli (only 1 time needed
+64bit setup https://cli-assets.heroku.com/channels/stable/heroku-x64.exe
+
+32bit setup https://cli-assets.heroku.com/channels/stable/heroku-x86.exe
+
+choose according to your system and instal it
+
+you also need to download git so download it and install
+
+https://github.com/git-for-windows/git/releases/download/v2.46.0.windows.1/Git-2.46.0-32-bit.exe
+
+2) open cmd 
+
+3) type :      
+heroku login
+and login with your heroku account 
+
+4) create heroku app by this command
+
+heroku create --region us --stack container {App_Name}
+
+replace app name by your choice
+here you get your base url so keep it safe
+
+5) download the your source code and extract it and fill the config make sure that remame the config_sample.env to config.env
+
+only fill these value , rest of value don't touch 
+# Startup Config
+API_ID = ""
+API_HASH = ""
+BOT_TOKEN = ""
+STATIC_AUTH_CHANNEL = ""
+DATABASE_URL = ""
+
+# Additional CDN Bots
+# MULTI_TOKEN1 = ""
+# MULTI_TOKEN2 = "" (upto 50)
+
+# Web Config
+BASE_URL = ""
+PORT = "8080"
+
+now on tab bar of of code where folder path is mention click on that and type cmd a cmd will open and type this one by one
+
+git add . -f
+
+git commit -m "HK Setup"
+
+heroku git:remote -a {App_Name}
+
+replace {App_Name} with your app name 
+
+
+git push heroku main -f
+
+
+done now
