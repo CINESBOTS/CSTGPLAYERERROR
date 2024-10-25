@@ -1,88 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="https://cdn.jsdelivr.net/gh/cyberdevlk/imagecloud@main/cloudv2/favicon.ico" type="image/x-icon">
-    <link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/cyberdevlk/imagecloud@main/cloudv2/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/cyberdevlk/imagecloud@main/cloudv2/favicon.ico"
+        type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-    <title>CSCLOUD V3</title>
+    <title>CSCLOUD V3: <!-- Filename --> </title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/weebzone/weebzone/data/Surf-TG/css/plyr.css">
     <script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
-    <link rel="stylesheet" href="https://bootswatch.com/5/flatly/bootstrap.min.css"> <!-- Flatly theme for example -->
-
+    <link rel="stylesheet" href="https://bootswatch.com/5/<!-- Theme -->/bootstrap.min.css">
+    <script disable-devtool-auto src='https://cdn.jsdelivr.net/npm/disable-devtool'></script>
     <style>
-        /* Make body and html take full height and width */
-        html, body {
-            height: 100%;
-            width: 100%;
+        /* body {
+            height: 100vh;
             margin: 0;
-            display: flex;
             justify-content: center;
             align-items: center;
-            background-color: #000; /* Optional: set background color */
+
+        } */
+
+        /* .container {
+            margin: auto;
+            padding: 0px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .card {
+            align-items: left;
+            box-shadow: none;
+            border-radius: 0%;
+            max-width: 48%
         }
 
         .video-player {
-            width: 100%;
-            max-width: 1000px; /* Optional: max width for better aspect ratio */
-            height: auto;
+            max-width: 48%;
+            margin: auto;
+            padding-bottom: 10px;
         }
 
-        video {
-            width: 100%;
-            height: auto; /* Maintain aspect ratio */
-        }
-
-        /* Style the quality dropdown in the player */
-        .plyr__quality {
-            display: inline-flex;
-            align-items: center;
-            margin-left: 10px;
-            color: #fff;
-        }
-
-        .quality-icon {
-            font-size: 1.2rem;
-            color: white;
-            cursor: pointer;
-            margin-right: 5px;
-        }
-
-        .quality-select {
-            background-color: transparent;
-            color: white;
-            border: 2px solid #ff007f; /* Rose-colored border */
+        .plyr {
             border-radius: 5px;
-            font-size: 1rem;
-            margin-left: 5px;
-            cursor: pointer;
-            padding: 3px 8px;
         }
 
-        .quality-select option {
-            background-color: #333;
-            color: white;
+        ::-webkit-scrollbar {
+            width: 5px;
         }
 
-        /* Dropdown customization */
-        .dropdown-menu {
-            background-color: #333;
-            border: none;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        ::-webkit-scrollbar-thumb {
+            background: #888;
         }
 
-        .dropdown-item {
-            color: white;
-        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        } */
 
-        .dropdown-item:hover {
-            background-color: #444;
-        }
+        /* @media (max-width: 992px) {
 
-        .dropdown-item .bi {
-            margin-right: 8px;
-        }
+            .video-player {
+                max-width: 80%;
+                margin: auto;
+            }
+
+            .card {
+                align-items: left;
+                box-shadow: none;
+                border-radius: 0%;
+                max-width: 80%
+            }
+
+            .navbar {
+                padding-right: 15px;
+                padding-left: 15px;
+            } */
+        /* } */
     </style>
 </head>
 
@@ -95,77 +96,43 @@
             <source src="#" type="video/mp4" size="1080" id="s1080"/>
         </video>
     </div>
-
-    <script>
-        const videolink = window.location.href;
-        const url = new URL(videolink);
-        const domainUrl = url.origin;
-        const videoId = '<!-- chatid -->';
-        const encodedName = '<!-- Filename -->';
-        let currentQuality = '720p'; // Default quality
-
-        const downloadlink = `${domainUrl}/swatch/${videoId}/${encodedName.replace(/720p|480p|1080p/i,'--size--')}`;
-
-        const player = new Plyr('#player', {
-            controls: ['play', 'progress', 'current-time', 'mute', 'volume', 'fullscreen', 'pip', 'airplay', 'play-large', 'duration'],
-            hideControls: false,
-            keyboard: { focused: true, global: true },
-            loop: { active: false },
-            quality: {
-                default: 720, // Set initial quality to 720p
-                options: [480, 720, 1080], // Define available quality options
-                forced: true,
-                onChange: (newQuality) => {
-                    switchQuality(newQuality); // Handle quality switch when changed
-                }
-            },
-        });
-
-        // Update video sources based on available qualities
-        function updateVideoSource() {
-            document.getElementById('s480').src = downloadlink.replace('--size--', '480p');
-            document.getElementById('s720').src = downloadlink.replace('--size--', '720p');
-            document.getElementById('s1080').src = downloadlink.replace('--size--', '1080p');
-        }
-
-        // Switch video quality
-        function switchQuality(quality) {
-            currentQuality = quality + 'p'; // Update current quality label
-            const video = document.getElementById('player');
-            const newSrc = downloadlink.replace('--size--', currentQuality);
-            video.src = newSrc;
-            player.source = {
-                type: 'video',
-                sources: [{ src: newSrc, type: 'video/mp4', size: quality }]
-            };
-            player.play();
-            updateQualityDisplay(); // Update the controller bar with current quality
-        }
-
-        // Add current quality display and dropdown in the player controls
-        function updateQualityDisplay() {
-            const controls = player.elements.controls;
-            const qualityLabel = document.createElement('div');
-            qualityLabel.classList.add('plyr__quality');
-            qualityLabel.innerHTML = `
-                <span class="quality-icon">
-                    
-                </span>
-                <select id="quality-select" class="quality-select" onchange="switchQuality(this.value)">
-                    <option value="480" ${currentQuality === '480p' ? 'selected' : ''}><i class="bi bi-play"></i>480p</option>
-                    <option value="720" ${currentQuality === '720p' ? 'selected' : ''}><i class="bi bi-play"></i>720p</option>
-                    <option value="1080" ${currentQuality === '1080p' ? 'selected' : ''}><i class="bi bi-play"></i>1080p</option>
-                </select>
-            `;
-            controls.appendChild(qualityLabel);
-        }
-
-        // Onload, update video source and quality display
-        window.onload = function () {
-            updateVideoSource();
-            updateQualityDisplay();
-        };
-    </script>
+    <!-- <div class="card bg-light mb-3" style="margin: auto; border-radius: 5px;">
+        <div class="card-body">
+            <h6 class="card-title">Name: <!-- Filename --></h6>
+            <p class="card-text">Size: <!-- Size --></p>
+        </div>
+    </div> -->
 
 </body>
+<script>
+    const videolink = window.location.href;
+    const url = new URL(videolink);
+    const domainUrl = url.origin;
+    const videoId = '<!-- chatid -->';
+    const encodedName = '<!-- Filename -->';
+
+
+    const downloadlink = `${domainUrl}/swatch/${videoId}/${encodedName.replace(/720p|480p|1080p/i,'--size--')}`;
+
+    const player = new Plyr('#player', {
+        controls: ['play', 'progress', 'current-time', 'mute', 'volume', 'fullscreen', 'pip', 'airplay', 'settings', "play-large", 'duration'],
+        settings : ['captions', 'quality', 'speed', 'loop'],
+        hideControls: false,
+        keyboard: { focused: true, global: true },
+        loop: { active: false },
+    });
+    
+    function updateVideoSource() {
+
+        document.getElementById('player').src = downloadlink.replace('--size--','720p');
+        document.getElementById('s480').src = downloadlink.replace('--size--','480p');
+        document.getElementById('s720').src = downloadlink.replace('--size--','720p');
+        document.getElementById('s1080').src = downloadlink.replace('--size--','1080p');
+
+    }
+    window.onload = function () {
+        updateVideoSource();
+    };
+</script>
+//to remove 480/1080p quality 119 remove quality and 128/129/130/94/96 commit
 </html>
