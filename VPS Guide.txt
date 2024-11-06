@@ -1,0 +1,146 @@
+1.Install NGINX
+sudo apt update
+sudo apt install nginx
+sudo systemctl start nginx
+sudo systemctl enable nginx
+sudo systemctl reload nginx
+
+
+if reinstall vps use this commnad to fix it
+ssh-keygen -R 89.110.105.47
+
+2.INSTALL APP
+
+{
+Docker steps for your personal modified repo ??
+
+1) git clone https://weebzone:{githubtoken}@github.com/weebzone/GayanSurf
+
+KEY
+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
+
+https://github.com/cyberdevlk/cscloud-V2-Player
+git clone https://cyberdevlk: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@github.com/CINESBOTS/CSTGPLAYERV1
+
+??Note: replace 
+{githubtoken}
+ with your own classic github token
+
+
+Install Docker
+https://docs.docker.com/engine/install/ubuntu/
+
+2) cd GayanSurf
+
+3) cp config_sample.env config.env
+
+4) nano config.env
+
+only fill these value rest of value don't touch
+
+# Startup Config
+API_ID = ""
+API_HASH = ""
+BOT_TOKEN = ""
+STATIC_AUTH_CHANNEL = ""    # seperate channel by ,
+DATABASE_URL = ""
+
+
+# Additional CDN Bots
+# MULTI_TOKEN1 = ""
+# MULTI_TOKEN2 = "" (upto 50)
+
+# Web Config
+BASE_URL = ""
+PORT = "8080"
+??? save the config
+
+5) sudo docker build -t surftg .
+
+6) sudo docker run -p 8080:8080 surftg
+sudo docker run --restart always -p 8080:8080 surftg
+
+done
+
+open the site
+http://BASE_URL:8080
+
+}
+
+3.
+IP:8080 redirect to IP
+
+need remove default file in enble and availabe 
+
+root@v155334:/etc/nginx/sites-available# ls
+default
+root@v155334:/etc/nginx/sites-available# nano 195.26.224.84.conf
+
+.............................................
+server {
+ listen 80;  # Listen on port 80 for incoming HTTP requests
+ server_name 195.26.224.84;  # Server name or domain name this block will respond to
+
+ location / {
+     proxy_pass http://195.26.224.84:8080;  # Proxy requests to the backend server running on localhost:8080
+     proxy_set_header Host $host;  # Set the Host header to the client's original host
+     proxy_set_header X-Real-IP $remote_addr;  # Set the X-Real-IP header to the client's IP address
+     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;  # Append client's IP addresses to X-Forwarded-For header
+     proxy_set_header X-Forwarded-Proto $scheme;  # Set the X-Forwarded-Proto header to the client's protocol (http or https)
+ }
+}
+...................................................
+sudo ln -s /etc/nginx/sites-available/185.157.212.34.conf /etc/nginx/sites-enabled/
+
+
+
+
+sudo nginx -t
+sudo systemctl reload nginx
+
+
+now need add domain to vps
+.....................
+
+root@v155334:/etc/nginx/sites-available# nano player2.cskinglk.xyz.conf
+
+
+......................................................
+server {
+ listen 80;  # Listen on port 80 for incoming HTTP requests
+ server_name player2.cskinglk.xyz www.player2.cskinglk.xyz;  # Server name or domain name this block will respond to
+
+ location / {
+     proxy_pass http://195.26.224.84:8080;  # Proxy requests to the backend server running on localhost:8080
+     proxy_set_header Host $host;  # Set the Host header to the client's original host
+     proxy_set_header X-Real-IP $remote_addr;  # Set the X-Real-IP header to the client's IP address
+     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;  # Append client's IP addresses to X-Forwarded-For header
+     proxy_set_header X-Forwarded-Proto $scheme;  # Set the X-Forwarded-Proto header to the client's protocol (http or https)
+ }
+}
+.....................................
+
+
+sudo nginx -t
+sudo systemctl reload nginx
+
+sudo ln -s /etc/nginx/sites-available/195.26.224.84.conf /etc/nginx/sites-enabled/
+sudo ln -s /etc/nginx/sites-available/player2.cskinglk.xyz.conf /etc/nginx/sites-enabled/
+
+
+sudo nginx -t
+sudo systemctl reload nginx
+
+
+INSTALL SSL  - https://docs.chaicode.com/ssl-in-nginx-ubuntu/
+
+
+sudo apt install certbot python3-certbot-nginx
+sudo certbot --nginx -d player2.cskinglk.xyz
+
+
+sudo nginx -t
+sudo systemctl reload nginx
+
+
+
